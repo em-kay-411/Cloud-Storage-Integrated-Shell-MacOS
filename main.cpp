@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "functions.hpp"
+
 using namespace std;
 
 
@@ -33,7 +34,7 @@ int main()
             lsCMD(cmd);
         }
 
-        else if (cmd.substr(0, 2) == "cd")
+        else if (cmd.substr(0, 3) == "cd ")
         {
             cdCMD(cmd);
         }
@@ -42,6 +43,18 @@ int main()
         {
             cout << "Exiting CLI...." << endl;
             break;
+        }
+
+        else if(cmd.substr(0, 6) == "mkdir "){
+            CMDmkdir(cmd);
+        }
+
+        else if(cmd.substr(0, 4) == "vim "){
+            system(cmd.c_str());
+        }
+
+        else if(cmd.substr(0, 3) == "vi"){
+            system(cmd.c_str());
         }
 
         else

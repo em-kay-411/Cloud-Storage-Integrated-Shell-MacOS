@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 
+
 using namespace std;
 
 // char *homeDir = getenv("HOME");
@@ -29,6 +30,16 @@ void printPath(char *PATH)
     PATH = temp; // update the value of PATH with the current working directory
 
     cout << displayPATH << " % ";
+}
+
+bool isPath(string str){
+    for(int i=0; i<str.length(); i++){
+        if(str[i] == '/'){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 string convertToString(char temp[])
