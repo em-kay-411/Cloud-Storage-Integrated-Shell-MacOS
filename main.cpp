@@ -1,30 +1,54 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
+#include <dirent.h>
+#include <vector>
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/utsname.h>
+#include "functions.hpp"
 using namespace std;
 
-string PATH = getenv("HOME");
-string displayPATH = "~";
-string cmd;
 
+int main()
+{
 
-void printPath(string PATH){        
-    if(PATH == getenv("HOME")){
-        displayPATH = "~ ";
-        cout<<displayPATH;
-    }
-    else{
-        cout<<displayPATH;
-    }
-}
+    while (cmd != "exit")
+    {
 
-int main(){    
-    while(cmd != "exit"){
         printPath(PATH);
-        break;
-        
-    }    
+        chdir(PATH);
+        char temp[2048];
+        getcwd(temp, 2048);
+        PATH = temp;
+        getline(cin, cmd);
+
+        if (cmd == "pwd")
+        {
+            char temp[2048];
+            getcwd(temp, 2048);
+            cout << temp << endl;
+        }
+        else if (cmd.substr(0, 2) == "ls")
+        {
+            lsCMD(cmd);
+        }
+
+        else if (cmd.substr(0, 2) == "cd")
+        {
+            cdCMD(cmd);
+        }
+
+        else if (cmd == "exit")
+        {
+            cout << "Exiting CLI...." << endl;
+            break;
+        }
+
+        else
+        {
+            cout << "No such command found. Only basic Linux commands can be used" << endl;
+        }
+    }
+
     return 0;
 }
