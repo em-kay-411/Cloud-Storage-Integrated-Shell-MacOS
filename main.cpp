@@ -51,6 +51,7 @@ int main()
 
         else if(cmd.substr(0, 2) == "rm"){
             rmCMD(cmd);
+            continue;
         }
 
         else if(cmd == "whoami"){
