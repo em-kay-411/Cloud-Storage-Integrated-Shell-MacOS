@@ -80,7 +80,13 @@ void cpCMD(string cmd){
         if (fs::is_directory(source)) {
             copy_directory(source, destination);
         } else {
-            copyFile(source, destination);
+            if(fs::exists(source) && fs::is_directory(destination)){
+                const auto new_path = destination / source.filename();
+                copyFile(source, new_path);
+            }
+            else{
+                copyFile(source, destination);
+            }
         }
 
 
