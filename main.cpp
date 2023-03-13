@@ -53,6 +53,10 @@ int main()
             rmCMD(cmd);
         }
 
+        else if(cmd == "whoami"){
+            usernameCMD();
+        }
+
         else if(cmd.substr(0, 4) == "vim "){
             system(cmd.c_str());
         }

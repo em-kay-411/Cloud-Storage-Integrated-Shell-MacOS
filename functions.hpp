@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-#include "rm.hpp"
+#include "whoami.hpp"
 using namespace std;
 
 bool isPath(string str);
@@ -18,3 +18,4 @@ void listFiles(const char *temp);
 void lsCMD(string cmd);
 void CMDmkdir(string cmd);
 void rmCMD(string cmd);
+void usernameCMD();
