@@ -10,6 +10,7 @@ using namespace std;
 
 void cdCMD(string cmd)
 {
+    removeEndSpaces(cmd);
     if (cmd.length() > 3)
     {
         string str = cmd.substr(3, cmd.length() - 3);

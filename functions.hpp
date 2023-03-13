@@ -6,9 +6,10 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-#include "whoami.hpp"
+#include "cp.hpp"
 using namespace std;
 
+void removeEndSpaces(string cmd);
 bool isPath(string str);
 void printPath(char *PATH);
 string convertToString(char temp[]);
@@ -19,3 +20,4 @@ void lsCMD(string cmd);
 void CMDmkdir(string cmd);
 void rmCMD(string cmd);
 void usernameCMD();
+void cpCMD(string cmd);

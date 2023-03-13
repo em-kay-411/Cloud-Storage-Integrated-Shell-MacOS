@@ -49,9 +49,13 @@ int main()
             CMDmkdir(cmd);
         }
 
-        else if(cmd.substr(0, 2) == "rm"){
+        else if(cmd.substr(0, 3) == "rm "){
             rmCMD(cmd);
             continue;
+        }
+
+        else if(cmd.substr(0, 3) == "cp "){
+            cpCMD(cmd);
         }
 
         else if(cmd == "whoami"){

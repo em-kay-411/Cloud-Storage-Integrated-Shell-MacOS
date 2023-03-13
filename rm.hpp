@@ -9,6 +9,7 @@ namespace fs = std::filesystem;
 
 void rmCMD(string cmd)
 {
+    removeEndSpaces(cmd);
     if (cmd.substr(3, 2) == "-r" || cmd.substr(3, 2) == "-R")
     {
         string file_path = cmd.substr(6, cmd.length() - 6);

@@ -73,6 +73,7 @@ void listFiles(const char *temp)
 
 void lsCMD(string cmd)
 {
+    removeEndSpaces(cmd);
     if (cmd.length() == 2)
     {
         const char *temp = static_cast<const char *>(PATH);

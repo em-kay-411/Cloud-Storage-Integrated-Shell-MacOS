@@ -42,6 +42,15 @@ bool isPath(string str){
     return false;
 }
 
+void removeEndSpaces(string cmd){
+    int i = cmd.length() - 1;
+    while(cmd[i] == ' '){
+        i--;
+    }
+    string temp = cmd.substr(0, i+1);
+    cmd = temp;
+}
+
 string convertToString(char temp[])
 {
     string ans = "";

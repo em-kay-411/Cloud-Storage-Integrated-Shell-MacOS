@@ -8,6 +8,7 @@ using namespace std;
 
 
 void CMDmkdir(string cmd){
+    removeEndSpaces(cmd);
     string tempPath = convertToString(PATH);
     string name = cmd.substr(6, cmd.length() - 6);
 
