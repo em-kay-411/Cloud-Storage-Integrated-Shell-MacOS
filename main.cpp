@@ -61,6 +61,10 @@ int main()
             mvCMD(cmd);
         }
 
+        else if(cmd == "env" || cmd == "printenv"){
+            printAllEnv();
+        }
+
         else if(cmd == "whoami"){
             usernameCMD();
         }
