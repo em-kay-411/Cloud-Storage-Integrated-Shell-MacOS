@@ -6,9 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-
-#include "mkdir.hpp"
-
+#include "rm.hpp"
 using namespace std;
 
 bool isPath(string str);
@@ -19,3 +17,4 @@ void listAllFiles(const char *temp);
 void listFiles(const char *temp);
 void lsCMD(string cmd);
 void CMDmkdir(string cmd);
+void rmCMD(string cmd);

@@ -49,6 +49,10 @@ int main()
             CMDmkdir(cmd);
         }
 
+        else if(cmd.substr(0, 2) == "rm"){
+            rmCMD(cmd);
+        }
+
         else if(cmd.substr(0, 4) == "vim "){
             system(cmd.c_str());
         }
