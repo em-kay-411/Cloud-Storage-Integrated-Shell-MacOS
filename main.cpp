@@ -51,11 +51,14 @@ int main()
 
         else if(cmd.substr(0, 3) == "rm "){
             rmCMD(cmd);
-            continue;
         }
 
         else if(cmd.substr(0, 3) == "cp "){
             cpCMD(cmd);
+        }
+
+        else if(cmd.substr(0, 3) == "mv "){
+            mvCMD(cmd);
         }
 
         else if(cmd == "whoami"){

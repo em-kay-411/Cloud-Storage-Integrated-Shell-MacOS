@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-#include "cp.hpp"
+#include "mv.hpp"
 using namespace std;
 
 void removeEndSpaces(string cmd);
@@ -21,3 +21,4 @@ void CMDmkdir(string cmd);
 void rmCMD(string cmd);
 void usernameCMD();
 void cpCMD(string cmd);
+void mvCMD(string cmd);
