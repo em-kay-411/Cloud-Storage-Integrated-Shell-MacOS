@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 int main()
 {
 
@@ -45,35 +44,56 @@ int main()
             break;
         }
 
-        else if(cmd.substr(0, 6) == "mkdir "){
+        else if (cmd.substr(0, 6) == "mkdir ")
+        {
             CMDmkdir(cmd);
         }
 
-        else if(cmd.substr(0, 3) == "rm "){
+        else if (cmd.substr(0, 3) == "rm ")
+        {
             rmCMD(cmd);
         }
 
-        else if(cmd.substr(0, 3) == "cp "){
+        else if (cmd.substr(0, 3) == "cp ")
+        {
             cpCMD(cmd);
         }
 
-        else if(cmd.substr(0, 3) == "mv "){
+        else if (cmd.substr(0, 3) == "mv ")
+        {
             mvCMD(cmd);
         }
 
-        else if(cmd == "env" || cmd == "printenv"){
+        else if (cmd == "env")
+        {
             printAllEnv();
         }
 
-        else if(cmd == "whoami"){
+        else if (cmd.substr(0, 9) == "printenv ")
+        {
+            removeEndSpaces(cmd);
+            if (cmd == "printenv")
+            {
+                printAllEnv();
+            }
+            else
+            {
+                printEnv(cmd);
+            }
+        }
+
+        else if (cmd == "whoami")
+        {
             usernameCMD();
         }
 
-        else if(cmd.substr(0, 4) == "vim "){
+        else if (cmd.substr(0, 4) == "vim ")
+        {
             system(cmd.c_str());
         }
 
-        else if(cmd.substr(0, 3) == "vi"){
+        else if (cmd.substr(0, 3) == "vi")
+        {
             system(cmd.c_str());
         }
 
