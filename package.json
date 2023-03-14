@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
+    "google-auth-library": "^8.7.0",
     "googleapis": "^112.0.0"
   }
 }

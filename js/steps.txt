@@ -1,0 +1,3 @@
+If not authorized with OAuth2.0, do so.
+Once authorized, the code generated from the link should be put as the access code 
+After completion of authorization, the function should start.

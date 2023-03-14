@@ -32,3 +32,5 @@ function oauthSignIn() {
     document.body.appendChild(form);
     form.submit();
   }
+
+  oauthSignIn();
