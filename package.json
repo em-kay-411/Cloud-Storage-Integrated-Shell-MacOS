@@ -1,0 +1,22 @@
+{
+  "name": "cloudshell",
+  "version": "1.0.0",
+  "description": "This is a shell that also runs commands on cloud storage platforms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS.git"
+  },
+  "author": "Mohit Kumbhare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS/issues"
+  },
+  "homepage": "https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS#readme",
+  "dependencies": {
+    "googleapis": "^112.0.0"
+  }
+}
