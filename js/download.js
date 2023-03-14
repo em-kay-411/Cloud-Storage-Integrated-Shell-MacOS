@@ -2,12 +2,13 @@ const { google } = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
 const { promisify } = require('util');
+const getFileID = require('./getfileID');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-const SCOPES = ['https://www.googleapis.com/auth/drive.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
 const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
@@ -31,8 +32,10 @@ fs.readFile('credentials.json', async (err, content) => {
       token = await getAccessToken(oAuth2Client);
     }
     const drive = google.drive({ version: 'v3', auth: oAuth2Client });
-    const fileId = '1YSb8VDThRIMGwkpobWJfIb3q24wjZaIH';
-    const destPath = './new.pdf';
+    const fileName = process.argv[2];
+    const fileId = getFileID(fileName);
+    
+    const destPath = process.argv[3];
     const dest = fs.createWriteStream(destPath);
     const res = await drive.files.get(
       { fileId, alt: 'media' },
