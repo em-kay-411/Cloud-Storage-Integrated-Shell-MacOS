@@ -21,6 +21,7 @@ int main()
         getcwd(temp, 2048);
         PATH = temp;
         getline(cin, cmd);
+        removeEndSpaces(cmd);
 
         if (cmd == "pwd")
         {
@@ -87,12 +88,21 @@ int main()
             usernameCMD();
         }
 
+        else if (cmd.substr(0, 7) == "switchd"){
+            removeEndSpaces(cmd);
+            string drive = cmd.substr(8, cmd.length() - 8);
+
+            if(drive == "gdrive"){
+                switchGDrive();
+            }
+        }
+
         else if (cmd.substr(0, 4) == "vim ")
         {
             system(cmd.c_str());
         }
 
-        else if (cmd.substr(0, 3) == "vi")
+        else if (cmd.substr(0, 3) == "vi ")
         {
             system(cmd.c_str());
         }

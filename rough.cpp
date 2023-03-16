@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 // #include <filesystem>
 
 using namespace std;
@@ -8,7 +9,6 @@ using namespace std;
 
 
 int main() {
-    string file_path="remove.pdf";
-    remove(file_path.c_str());
+    system("./sample.sh");
     return 0;
 }

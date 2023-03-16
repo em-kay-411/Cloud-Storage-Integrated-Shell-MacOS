@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-#include "env.hpp"
+#include "switchGDrive.hpp"
 using namespace std;
 
 void removeEndSpaces(string cmd);
@@ -23,3 +23,4 @@ void usernameCMD();
 void cpCMD(string cmd);
 void mvCMD(string cmd);
 void printAllEnv();
+void switchGDrive();
