@@ -1,0 +1,24 @@
+{
+  "name": "shellproject",
+  "version": "1.0.0",
+  "description": "It is a Cloud Integrated Shell",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS.git"
+  },
+  "author": "Mohit Kumbhare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS/issues"
+  },
+  "homepage": "https://github.com/em-kay-411/Cloud-Storage-Integrated-Shell-MacOS#readme",
+  "dependencies": {
+    "google-auth-library": "^8.7.0",
+    "googleapis": "^113.0.0",
+    "readline": "^1.3.0"
+  }
+}
