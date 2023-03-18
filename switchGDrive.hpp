@@ -23,7 +23,7 @@ void switchGDrive(){
         if(gcmd == "ls"){
             string command = "./gdrive/ls.sh "  + directoryName;            
             system(command.c_str());
-        }       
+        }
     }
 
 
