@@ -65,12 +65,13 @@ async function getDirectoryIdByName(auth, name) {
     });
     const files = response.data.files;
     if (files.length === 0) {
-      console.log(`No directory found with name '${name}'`);
-      return;
+      
+      return null;
     } else if (files.length > 1) {
       console.warn(`Multiple directories found with name '${name}', using first one`);
+      return files[0].id;
     }
-    return files[0].id;
+    
   } catch (err) {
     console.error('Error finding directory:', err);
     throw err;
@@ -83,19 +84,25 @@ async function getDirectoryIdByName(auth, name) {
 async function listFiles(auth) {
   const drive = google.drive({ version: 'v3', auth });
   const DIRECTORY_ID = await getDirectoryIdByName(auth, process.argv[2]);
-  drive.files.list({
-    q: `'${DIRECTORY_ID}' in parents and trashed = false`,
-    fields: 'nextPageToken, files(id, name)',
-  }, (err, res) => {
-    if (err) return console.error('Error listing files', err);
-    const files = res.data.files;
-    if (files.length) {
-
-      files.forEach((file) => {
-        console.log(`${file.name}`);
-      });
-    } else {
-      console.log('No files found in the directory');
-    }
-  });
+  if(DIRECTORY_ID != null){
+    drive.files.list({
+      q: `'${DIRECTORY_ID}' in parents and trashed = false`,
+      fields: 'nextPageToken, files(id, name)',
+    }, (err, res) => {
+      if (err) return console.error('Error listing files', err);
+      const files = res.data.files;
+      if (files.length) {
+  
+        files.forEach((file) => {
+          console.log(`${file.name}`);
+        });
+      } else {
+        console.log('No files found in the directory');
+      }
+    });
+  }
+  else{
+    console.log("No directory of such name found");
+  }
+  
 }
