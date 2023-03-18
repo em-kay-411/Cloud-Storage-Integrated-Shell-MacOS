@@ -14,9 +14,8 @@ void switchGDrive(){
         removeEndSpaces(gcmd);
 
         if(gcmd == "ls"){
-            char *command = "node";
-            char *argv[] = {command, "./gdrive/listfiles.js", const_cast<char*>(directoryName.c_str()), NULL};
-            execv(command, argv);
+            string command = "./gdrive/ls.sh "  + directoryName;
+            system(command.c_str());
         }       
     }
 

@@ -1,5 +1,5 @@
-const {google} = require('googleapis');
-const {OAuth2Client} = require('google-auth-library');
+const { google } = require('googleapis');
+const { OAuth2Client } = require('google-auth-library');
 const fs = require('fs');
 const readline = require('readline');
 
@@ -15,7 +15,7 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 });
 
 function authorize(credentials, callback) {
-  const {client_id, client_secret, redirect_uris} = credentials.installed;
+  const { client_id, client_secret, redirect_uris } = credentials.installed;
   const oAuth2Client = new OAuth2Client(client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
@@ -54,22 +54,34 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 async function getDirectoryIdByName(auth, name) {
-    const drive = google.drive({version: 'v3', auth})
+  if (name === "root") {
+    return "root";
+  }
+  const drive = google.drive({ version: 'v3', auth })
+  try {
     const response = await drive.files.list({
       q: `mimeType='application/vnd.google-apps.folder' and trashed=false and name='${name}'`,
       fields: 'nextPageToken, files(id)',
     });
     const files = response.data.files;
     if (files.length === 0) {
-      throw new Error(`No directory found with name '${name}'`);
+      console.log(`No directory found with name '${name}'`);
+      return;
     } else if (files.length > 1) {
       console.warn(`Multiple directories found with name '${name}', using first one`);
     }
     return files[0].id;
+  } catch (err) {
+    console.error('Error finding directory:', err);
+    throw err;
+  }
+
+
+
 }
 
 async function listFiles(auth) {
-  const drive = google.drive({version: 'v3', auth});
+  const drive = google.drive({ version: 'v3', auth });
   const DIRECTORY_ID = await getDirectoryIdByName(auth, process.argv[2]);
   drive.files.list({
     q: `'${DIRECTORY_ID}' in parents and trashed = false`,
@@ -78,9 +90,9 @@ async function listFiles(auth) {
     if (err) return console.error('Error listing files', err);
     const files = res.data.files;
     if (files.length) {
-      console.log('Files in the directory:');
+
       files.forEach((file) => {
-        console.log(`${file.name} (${file.id})`);
+        console.log(`${file.name}`);
       });
     } else {
       console.log('No files found in the directory');
