@@ -1,11 +1,9 @@
 const { google } = require('googleapis');
-const { OAuth2Client } = require('google-auth-library');
+const authorize = require('./oauth');
 const fs = require('fs');
-const readline = require('readline');
+const getDirectoryIdByName = require('./getDirectoryIdByName')
 
 const CREDENTIALS_PATH = './credentials.json';
-const TOKEN_PATH = './token.json';
-const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
 
 // Load client secrets from a JSON file
 fs.readFile(CREDENTIALS_PATH, (err, content) => {
@@ -14,77 +12,10 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
   authorize(JSON.parse(content), listFiles);
 });
 
-function authorize(credentials, callback) {
-  const { client_id, client_secret, redirect_uris } = credentials.installed;
-  const oAuth2Client = new OAuth2Client(client_id, client_secret, redirect_uris[0]);
-
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) {
-      return getNewToken(oAuth2Client, callback);
-    }
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
-  });
-}
-
-function getNewToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/drive.readonly']
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      callback(oAuth2Client);
-    });
-  });
-}
-
-async function getDirectoryIdByName(auth, name) {
-  if (name === "root") {
-    return "root";
-  }
-  const drive = google.drive({ version: 'v3', auth })
-  try {
-    const response = await drive.files.list({
-      q: `mimeType='application/vnd.google-apps.folder' and trashed=false and name='${name}'`,
-      fields: 'nextPageToken, files(id)',
-    });
-    const files = response.data.files;
-    if (files.length === 0) {
-      
-      return null;
-    } else if (files.length > 1) {
-      console.warn(`Multiple directories found with name '${name}', using first one`);
-      return files[0].id;
-    }
-    
-  } catch (err) {
-    console.error('Error finding directory:', err);
-    throw err;
-  }
-
-
-
-}
-
 async function listFiles(auth) {
   const drive = google.drive({ version: 'v3', auth });
   const DIRECTORY_ID = await getDirectoryIdByName(auth, process.argv[2]);
-  if(DIRECTORY_ID != null){
+  if (DIRECTORY_ID != null) {
     drive.files.list({
       q: `'${DIRECTORY_ID}' in parents and trashed = false`,
       fields: 'nextPageToken, files(id, name)',
@@ -92,7 +23,7 @@ async function listFiles(auth) {
       if (err) return console.error('Error listing files', err);
       const files = res.data.files;
       if (files.length) {
-  
+
         files.forEach((file) => {
           console.log(`${file.name}`);
         });
@@ -101,8 +32,8 @@ async function listFiles(auth) {
       }
     });
   }
-  else{
+  else {
     console.log("No directory of such name found");
   }
-  
+
 }
