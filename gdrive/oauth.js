@@ -20,7 +20,7 @@ function authorize(credentials, callback) {
 function getNewToken(oAuth2Client, callback) {
     const authUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/drive.readonly']
+        scope: ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/drive']
     });
     console.log('Authorize this app by visiting this url:', authUrl);
     const rl = readline.createInterface({

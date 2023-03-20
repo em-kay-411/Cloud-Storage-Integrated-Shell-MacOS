@@ -3,6 +3,7 @@ const authorize = require('./oauth');
 const path = require('path');
 const { google } = require('googleapis');
 const getDirectoryIdByName = require('./getDirectoryIdByName');
+const getFileIdByName = require('./getFileIdByName')
 
 const CREDENTIALS_PATH = './credentials.json';
 
@@ -15,7 +16,10 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 
 async function downloadResource(auth) {  
     const drive = google.drive({ version: 'v3', auth});  
-    const resourceId = await getDirectoryIdByName(auth, process.argv[2]);
+    let resourceId = await getDirectoryIdByName(auth, process.argv[2]);
+    if(resourceId === null){
+        resourceId = await getFileIdByName(auth, process.argv[2]);
+    }
     const resourcePath = process.argv[3];
     
     await download(drive, resourceId, resourcePath);  

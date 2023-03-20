@@ -24,6 +24,17 @@ void switchGDrive(){
             string command = "./gdrive/ls.sh "  + directoryName;            
             system(command.c_str());
         }
+
+        else if(gcmd.substr(0, 4) == "dwd "){
+            int i = gcmd.length() - 1;
+            while(gcmd[i] != ' '){
+                i--;
+            }
+            string source = gcmd.substr(4, i-4);
+            string destination = gcmd.substr(i+1, gcmd.length() - i);
+            string command = "./gdrive/dwd.sh " + source + " " + destination;
+            system(command.c_str());
+        }
     }
 
 
