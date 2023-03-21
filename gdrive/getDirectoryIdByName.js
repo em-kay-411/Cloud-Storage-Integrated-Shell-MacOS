@@ -15,8 +15,8 @@ async function getDirectoryIdByName(auth, name) {
         if (files.length === 0) {
 
             return null;
-        } else if (files.length > 1) {
-            console.warn(`Multiple directories found with name '${name}', using first one`);
+        } else if (files.length >= 1) {
+            // console.warn(`Multiple directories found with name '${name}', using first one`);
             return files[0].id;
         }
 

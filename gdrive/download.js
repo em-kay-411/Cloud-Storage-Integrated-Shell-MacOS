@@ -17,9 +17,11 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 async function downloadResource(auth) {  
     const drive = google.drive({ version: 'v3', auth});  
     let resourceId = await getDirectoryIdByName(auth, process.argv[2]);
+    
     if(resourceId === null){
         resourceId = await getFileIdByName(auth, process.argv[2]);
     }
+    
     const resourcePath = process.argv[3];
     
     await download(drive, resourceId, resourcePath);  

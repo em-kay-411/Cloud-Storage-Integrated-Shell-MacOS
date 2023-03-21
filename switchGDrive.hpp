@@ -32,7 +32,7 @@ void switchGDrive(){
             }
             string source = gcmd.substr(4, i-4);
             string destination = gcmd.substr(i+1, gcmd.length() - i);
-            string command = "./gdrive/dwd.sh " + source + " " + destination;
+            string command = "./gdrive/dwd.sh " + source + " " + destination + "/" + source;
             system(command.c_str());
         }
     }
