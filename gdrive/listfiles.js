@@ -2,6 +2,7 @@ const { google } = require('googleapis');
 const authorize = require('./oauth');
 const fs = require('fs');
 const getDirectoryIdByName = require('./getDirectoryIdByName')
+const getDirectoryIdByPath = require('./getDirectoryIdByPath')
 
 const CREDENTIALS_PATH = './credentials.json';
 
@@ -14,7 +15,10 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 
 async function listFiles(auth) {
   const drive = google.drive({ version: 'v3', auth });
-  const DIRECTORY_ID = await getDirectoryIdByName(auth, process.argv[2]);
+  var DIRECTORY_ID = await getDirectoryIdByName(auth, process.argv[2]);
+  if(DIRECTORY_ID === null){
+    DIRECTORY_ID = await getDirectoryIdByPath(auth, process.argv[2]);
+  }
   if (DIRECTORY_ID != null) {
     drive.files.list({
       q: `'${DIRECTORY_ID}' in parents and trashed = false`,
