@@ -50,6 +50,18 @@ void switchGDrive(){
             string command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
             system(command.c_str());
         }
+
+        else if(gcmd.substr(0, 4) == "upd "){
+            int i = gcmd.length() - 1;
+            while(gcmd[i] != ' '){
+                i--;
+            }
+
+            string source = gcmd.substr(4, i-4);
+            string destination = gcmd.substr(i+1, gcmd.length() - i);
+            string command = "./gdrive/up.sh " + source + " " + destination;
+            system(command.c_str());
+        }
     }
 
 
