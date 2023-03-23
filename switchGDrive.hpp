@@ -10,8 +10,12 @@ using namespace std;
 
 string getDestinationName(string destination){
     int i = destination.length() - 1;
-    while(destination[i] != '/'){
+    while(i>=0 && destination[i] != '/'){
         i--;
+    }
+
+    if(i < 0){
+        return destination;
     }
 
     return destination.substr(i+1, destination.length() - (i+1));
@@ -39,24 +43,25 @@ void switchGDrive(){
     // getcwd(temp, 2048);
     // cout<<temp<<endl;
     while(gcmd != "exit"){
-        cout<<directoryName<<" > ";
-        getline(cin, gcmd);
-        removeEndSpaces(gcmd);
         gpath = get_gpath(gpathFile);
+        cout<<directoryName<<"/"<<gpath<<" > ";
+        getline(cin, gcmd);
+        removeEndSpaces(gcmd);               
 
         if(gcmd == "ls"){
             string command;
             if(gpath == ""){
-                command = "./gdrive/ls.sh "  + directoryName;   
+                command = "./gdrive/ls.sh root";
             }
             else{
-                command = "./gdrive/ls.sh "  + gpath + "/" + directoryName;
-            }         
+                command = "./gdrive/ls.sh "  + gpath;
+            }
+                    
             system(command.c_str());
         }
 
         else if(gcmd.substr(0, 3) == "ls "){
-            string command = "./gdrive/ls.sh " + gcmd.substr(3, gcmd.length() - 3);
+            string command = "./gdrive/ls.sh " + gpath + "/" + gcmd.substr(3, gcmd.length() - 3);
             system(command.c_str());
         }
 
@@ -66,14 +71,14 @@ void switchGDrive(){
                 i--;
             }
             string source = gcmd.substr(4, i-4);
-            string destination = gcmd.substr(i+1, gcmd.length() - i);
+            string destination = gcmd.substr(i+1, (gcmd.length() - (i+1)));
             string destName = getDestinationName(source);
             string command;
             if(gpath == ""){
-                string command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
+                command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
             }
             else{
-                string command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
+                command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
             }
             
             system(command.c_str());
@@ -107,6 +112,18 @@ void switchGDrive(){
                 command = "./gdrive/cd.sh " + gpath + "/" + path;
             }
             system(command.c_str());
+        }
+
+        else if(gcmd == "exit"){            
+            ofstream file("./gdrive/gid.txt", ios::out);   
+            file << "";   
+            file.close();
+
+            ofstream file2("./gdrive/gpath.txt", ios::out);
+            file2<<"";
+            file2.close();
+
+            chdir(PATH);
         }
     }
 
