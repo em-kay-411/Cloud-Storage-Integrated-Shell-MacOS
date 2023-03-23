@@ -7,6 +7,15 @@
 namespace fs = std::filesystem;
 using namespace std;
 
+string getDestinationName(string destination){
+    int i = destination.length() - 1;
+    while(destination[i] != '/'){
+        i--;
+    }
+
+    return destination.substr(i+1, destination.length() - (i+1));
+}
+
 void switchGDrive(){
     
     string gcmd;
@@ -37,7 +46,8 @@ void switchGDrive(){
             }
             string source = gcmd.substr(4, i-4);
             string destination = gcmd.substr(i+1, gcmd.length() - i);
-            string command = "./gdrive/dwd.sh " + source + " " + destination + "/" + source;
+            string destName = getDestinationName(source);
+            string command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
             system(command.c_str());
         }
     }
