@@ -79,6 +79,7 @@ async function chdir(auth){
     if(ID === null || ID === undefined){
         ID = await changeDirectoryIdByName(auth, newPath);
     }
+    //This piece is wotking right becaue a callback is called 
     if(ID != null){
         fs.writeFile("./gpath.txt", newPath, (err) => {
             if(err){

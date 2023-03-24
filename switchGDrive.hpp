@@ -104,7 +104,6 @@ void switchGDrive(){
 
         else if(gcmd.substr(0, 3) == "cd "){
             string path = gcmd.substr(3, gcmd.length() - 3);
-            cout<<path<<endl;
             string command;
             if(path == ".."){
                 command = "./gdrive/cdp.sh";
@@ -116,6 +115,39 @@ void switchGDrive(){
             }
             else{
                 command = "./gdrive/cd.sh " + gpath + "/" + path;
+            }
+            system(command.c_str());
+        }
+
+        else if(gcmd.substr(0, 3) == "rm "){
+            string path = gcmd.substr(3, gcmd.length() - 3);
+            string command;
+            if(gpath == ""){
+                command = "./gdrive/rm.sh " + path; 
+            }
+            else{
+                command = "./gdrive/rm.sh " + gpath + "/" + path;
+            }
+            system(command.c_str());
+        }
+
+        else if(gcmd.substr(0, 3) == "mv "){
+            int i = gcmd.length() - 1;
+            while(gcmd[i] != ' '){
+                i--;
+            }
+            string source = gcmd.substr(3, i-3);
+            string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
+            string command;
+            if(gpath == ""){
+                string argv2 = source;
+                string argv3 = destination;
+                command = "./gdrive/mv.sh " + source + " " + destination;
+            }
+            else{
+                string argv2 = gpath + "/" + source;
+                string argv3 = destination;
+                command = "./gdrive/mv.sh " + source + " " + destination;
             }
             system(command.c_str());
         }
