@@ -173,6 +173,24 @@ void switchGDrive(){
             system(command.c_str());
         }
 
+        else if(gcmd.substr(0, 6) == "mkdir "){
+            string name = gcmd.substr(6, gcmd.length() - 6);
+            string command;
+            if(isPath(name)){
+                int i = name.length() - 1;
+                while(name[i] != '/'){
+                    i--;
+                }
+                string folderName = name.substr(i+1, (name.length() - (i+1)));
+                string folderPath = name.substr(0, i);
+                command = "./gdrive/mkdir.sh " + folderName + " " + folderPath;
+            }
+            else{
+                command = "./gdrive/mkdir.sh " + name + " " + gpath;
+            }
+            system(command.c_str());
+        }
+
         else if(gcmd == "exit"){            
             ofstream file("./gdrive/gid.txt", ios::out);   
             file << "";   
