@@ -3,9 +3,9 @@ const { OAuth2Client } = require('google-auth-library');
 const fs = require('fs');
 
 const TOKEN_PATH = './token.json';
-function authorize(credentials, callback) {
+async function authorize(credentials, callback) {
     const { client_id, client_secret, redirect_uris } = credentials.installed;
-    const oAuth2Client = new OAuth2Client(client_id, client_secret, redirect_uris[0]);
+    const oAuth2Client = await new OAuth2Client(client_id, client_secret, redirect_uris[0]);
 
     // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, (err, token) => {

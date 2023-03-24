@@ -152,6 +152,27 @@ void switchGDrive(){
             system(command.c_str());
         }
 
+        else if(gcmd.substr(0, 3) == "cp "){
+            int i = gcmd.length() - 1;
+            while(gcmd[i] != ' '){
+                i--;
+            }
+            string source = gcmd.substr(3, i-3);
+            string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
+            string command;
+            if(gpath == ""){
+                string argv2 = source;
+                string argv3 = destination;
+                command = "./gdrive/cp.sh " + source + " " + destination;
+            }
+            else{
+                string argv2 = gpath + "/" + source;
+                string argv3 = destination;
+                command = "./gdrive/cp.sh " + source + " " + destination;
+            }
+            system(command.c_str());
+        }
+
         else if(gcmd == "exit"){            
             ofstream file("./gdrive/gid.txt", ios::out);   
             file << "";   
