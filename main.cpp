@@ -11,6 +11,9 @@ using namespace std;
 
 int main()
 {
+    char CISpath[2048];
+    getcwd(CISpath, 2048);
+    setenv("CIS_PATH", CISpath, 1);
 
     while (cmd != "exit")
     {
@@ -22,6 +25,13 @@ int main()
         PATH = temp;
         getline(cin, cmd);
         removeEndSpaces(cmd);
+        if(history.size() == 200){
+            history.pop();
+            history.push(cmd);
+        } 
+        else{
+            history.push(cmd);
+        }
 
         if (cmd == "pwd")
         {
@@ -100,6 +110,16 @@ int main()
         else if (cmd.substr(0, 4) == "vim ")
         {
             system(cmd.c_str());
+        }
+
+        else if(cmd == "history"){
+            int n = history.size();
+            for(int i=0; i<history.size(); i++){
+                string gcmd = history.front();
+                history.pop();
+                cout << gcmd << endl;
+                history.push(gcmd);
+            }
         }
 
         else if (cmd.substr(0, 3) == "vi ")

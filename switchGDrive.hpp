@@ -1,13 +1,30 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <queue>
 #include <unistd.h>
 #include <cstdlib>
 
 #include "env.hpp"
 namespace fs = std::filesystem;
 using namespace std;
+
+void gDriveHelp(){
+    cout << "               Cloud Integrated Shell - v1.0"<<endl;
+    cout << "                      Powered by EmKay"<<endl;
+    cout << "ls [<directoryPath>]           -      List files"<<endl;
+    cout << "dwd <source> <destination>     -      Download source file/folder to local destination"<<endl;
+    cout << "upd <source> <destination>     -      Upload source file/folder to Google Drive"<<endl;
+    cout << "cd <path>                      -      Change Current Directory to the path in Google Drive"<<endl;
+    cout << "rm <path>                      -      Delete the file/folder from Google Drive"<<endl;
+    cout << "mv <source> <destination>      -      Move source file/folder to a destination on Google Drive"<<endl;
+    cout << "cp <source> <destination>      -      Copy source file/folder to a destination on Google Drive"<<endl;
+    cout << "mkdir <path>                   -      Create a new directory on given path in Google Drive"<<endl;
+    cout << "whoami                         -      Get info about THIS ;-)"<<endl;
+    cout << "pwd                            -      Get current current working directory"<<endl;
+    cout << "help                           -      Help page"<<endl;
+    cout << "exit                           -      Exit from Google Drive and enter into the local system"<<endl;
+
+}
 
 string getDestinationName(string destination){
     int i = destination.length() - 1;
@@ -31,6 +48,13 @@ string get_gpath(string gpathFile){
     }
     newfile.close();
     return tp;
+}
+
+bool isRootPath(string path){
+    if(path.substr(0, 5) == "root/"){
+        return true;
+    }
+    return false;
 }
 
 void switchGDrive(){
@@ -70,7 +94,19 @@ void switchGDrive(){
         }
 
         else if(gcmd.substr(0, 3) == "ls "){
-            string command = "./gdrive/ls.sh " + gpath + "/" + gcmd.substr(3, gcmd.length() - 3);
+            string command;
+            string path = gcmd.substr(3, gcmd.length() - 3);
+            if(isRootPath(path)){
+                command = "./gdrive/ls.sh " + path.substr(5, path.length() - 5);
+            }
+            else{
+                if(gpath == ""){
+                    command = "./gdrive/ls.sh " + gcmd.substr(3, gcmd.length() - 3);
+                }
+                else{
+                    command = "./gdrive/ls.sh " + gpath + "/" + gcmd.substr(3, gcmd.length() - 3);
+                }                
+            }            
             system(command.c_str());
         }
 
@@ -83,12 +119,17 @@ void switchGDrive(){
             string destination = gcmd.substr(i+1, (gcmd.length() - (i+1)));
             string destName = getDestinationName(source);
             string command;
-            if(gpath == ""){
-                command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
+            if(isRootPath(source)){
+                command = "./gdrive/dwd.sh " + source.substr(5, source.length() - 5) + " " + destination + "/" + destName;
             }
             else{
-                command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
-            }
+                if(gpath == ""){
+                    command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
+                }
+                else{
+                    command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
+                }
+            }          
             
             system(command.c_str());
         }
@@ -102,12 +143,18 @@ void switchGDrive(){
             string source = gcmd.substr(4, i-4);
             string destination = gcmd.substr(i+1, gcmd.length() - i);
             string command;
-            if(gpath == ""){
-                command = "./gdrive/up.sh " + source + " " + destination;
+            if(isRootPath(destination)){
+                command = "./gdrive/up.sh " + source + " " + destination.substr(5, destination.length() - 5);
             }
             else{
-                command = "./gdrive/up.sh " + source + " " + gpath + "/" + destination;
-            } 
+                if(gpath == ""){
+                    command = "./gdrive/up.sh " + source + " " + destination;
+                }
+                else{
+                    command = "./gdrive/up.sh " + source + " " + gpath + "/" + destination;
+                }
+            }
+             
             system(command.c_str());
         }
 
@@ -119,27 +166,38 @@ void switchGDrive(){
                 system(command.c_str());
                 continue;
             }
-            if(gpath == ""){
-                command = "./gdrive/cd.sh " + path;
+            if(isRootPath(path)){
+                command = "./gdrive/cd.sh " + path.substr(5, path.length() - 5);
             }
             else{
-                command = "./gdrive/cd.sh " + gpath + "/" + path;
-            }
+                if(gpath == ""){
+                    command = "./gdrive/cd.sh " + path;
+                }
+                else{
+                    command = "./gdrive/cd.sh " + gpath + "/" + path;
+                }
+            }               
             system(command.c_str());
         }
 
         else if(gcmd.substr(0, 3) == "rm "){
             string path = gcmd.substr(3, gcmd.length() - 3);
             string command;
-            if(gpath == ""){
-                command = "./gdrive/rm.sh " + path; 
+            if(isRootPath(path)){
+                command = "./gdrive/rm.sh " + path.substr(5, path.length() - 5);
             }
             else{
-                command = "./gdrive/rm.sh " + gpath + "/" + path;
-            }
+                if(gpath == ""){
+                    command = "./gdrive/rm.sh " + path; 
+                }
+                else{
+                    command = "./gdrive/rm.sh " + gpath + "/" + path;
+                }
+            }            
             system(command.c_str());
         }
 
+        //Only absolute paths required
         else if(gcmd.substr(0, 3) == "mv "){
             int i = gcmd.length() - 1;
             while(gcmd[i] != ' '){
@@ -161,6 +219,7 @@ void switchGDrive(){
             system(command.c_str());
         }
 
+        //Only absolute paths
         else if(gcmd.substr(0, 3) == "cp "){
             int i = gcmd.length() - 1;
             while(gcmd[i] != ' '){
@@ -192,7 +251,13 @@ void switchGDrive(){
                 }
                 string folderName = name.substr(i+1, (name.length() - (i+1)));
                 string folderPath = name.substr(0, i);
-                command = "./gdrive/mkdir.sh " + folderName + " " + folderPath;
+                if(isRootPath(folderPath)){
+                    command = "./gdrive/mkdir.sh " + folderName + " " + folderPath.substr(5, folderPath.length() - 5);
+                }   
+                else{
+                    command = "./gdrive/mkdir.sh " + folderName + " " + gpath + "/" + folderPath;
+                }
+                
             }
             else{
                 command = "./gdrive/mkdir.sh " + name + " " + gpath;
@@ -208,7 +273,19 @@ void switchGDrive(){
             cout<<"gdrive:root/"<<gpath<<endl;
         }
 
-        
+        else if(gcmd == "history"){
+            int n = history.size();
+            for(int i=0; i<history.size(); i++){
+                string cmd = history.front();
+                history.pop();
+                cout << cmd << endl;
+                history.push(cmd);
+            }
+        }
+
+        else if(gcmd == "help"){
+            gDriveHelp();
+        }
 
         else if(gcmd == "exit"){            
             ofstream file("./gdrive/gid.txt", ios::out);   
