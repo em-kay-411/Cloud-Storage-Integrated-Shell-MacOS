@@ -1,9 +1,7 @@
 const { google } = require('googleapis');
 const fs = require('fs');
-const path = require('path');
 const authorize = require('./oauth');
-const getDirectoryIdByPath = require('./getDirectoryIdByPath');
-const getDirectoryIdByName = require('./getDirectoryIdByName');
+
 
 const CREDENTIALS_PATH = "./credentials.json"
 
@@ -13,6 +11,7 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
     // Authorize a client with credentials, and then call the Google Drive API.
     authorize(JSON.parse(content), chdir);
 });
+
 
 async function changeDirectoryIdByName(auth, name) {
     if (name === "root") {

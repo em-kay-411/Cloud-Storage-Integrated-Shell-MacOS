@@ -1,4 +1,6 @@
+.gitignore
 gdrive/credentials.json
+node_modules/
 gdrive/token.json
 sample.sh
 rough.cpp

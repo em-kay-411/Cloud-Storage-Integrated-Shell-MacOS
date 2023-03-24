@@ -104,7 +104,13 @@ void switchGDrive(){
 
         else if(gcmd.substr(0, 3) == "cd "){
             string path = gcmd.substr(3, gcmd.length() - 3);
+            cout<<path<<endl;
             string command;
+            if(path == ".."){
+                command = "./gdrive/cdp.sh";
+                system(command.c_str());
+                continue;
+            }
             if(gpath == ""){
                 command = "./gdrive/cd.sh " + path;
             }
