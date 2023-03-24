@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <queue>
 #include <unistd.h>
 #include <cstdlib>
 
@@ -38,6 +39,7 @@ void switchGDrive(){
     string directoryName = "root";
     chdir(getenv("CIS_PATH"));
     string gpath = "";
+    queue<string> history;
      
     // char temp[2048];
     // getcwd(temp, 2048);
@@ -46,7 +48,14 @@ void switchGDrive(){
         gpath = get_gpath(gpathFile);
         cout<<directoryName<<"/"<<gpath<<" > ";
         getline(cin, gcmd);
-        removeEndSpaces(gcmd);               
+        removeEndSpaces(gcmd);  
+        if(history.size() == 200){
+            history.pop();
+            history.push(gcmd);
+        } 
+        else{
+            history.push(gcmd);
+        }            
 
         if(gcmd == "ls"){
             string command;
@@ -190,6 +199,16 @@ void switchGDrive(){
             }
             system(command.c_str());
         }
+
+        else if(gcmd == "whoami"){
+            cout<<"Google Drive"<<endl;
+        }
+
+        else if(gcmd == "pwd"){
+            cout<<"gdrive:root/"<<gpath<<endl;
+        }
+
+        
 
         else if(gcmd == "exit"){            
             ofstream file("./gdrive/gid.txt", ios::out);   
