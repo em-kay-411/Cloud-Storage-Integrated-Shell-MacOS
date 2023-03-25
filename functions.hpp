@@ -24,3 +24,4 @@ void cpCMD(string cmd);
 void mvCMD(string cmd);
 void printAllEnv();
 void switchGDrive();
+void execFromLocalGDrive(string cmd);

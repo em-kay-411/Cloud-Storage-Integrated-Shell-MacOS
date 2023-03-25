@@ -122,6 +122,11 @@ int main()
             }
         }
 
+        else if(cmd.substr(0, 7) == "gdrive:"){
+            cmd = cmd.substr(7, cmd.length() - 7);
+            execFromLocalGDrive(cmd);
+        }
+
         else if (cmd.substr(0, 3) == "vi ")
         {
             system(cmd.c_str());
