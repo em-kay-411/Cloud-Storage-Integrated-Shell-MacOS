@@ -57,11 +57,24 @@ bool isRootPath(string path){
     return false;
 }
 
-void switchGDrive(){
+void startAuthServer(){
+    string cisPath = getenv("CIS_PATH");
+    string command = "pm2 start " + cisPath + "/gdrive/authLocalServer.js";
+    system(command.c_str());
+}
+
+void stopAuthServer(){
+    string cisPath = getenv("CIS_PATH");
+    string command = "pm2 stop " + cisPath + "/gdrive/authLocalServer.js";
+    system(command.c_str());
+}
+
+void switchGDrive(){    
     string gpathFile = "./gdrive/gpath.txt";
     string gcmd;
     string directoryName = "root";
     chdir(getenv("CIS_PATH"));
+    startAuthServer();    
     string gpath = "";
     queue<string> history;
      
@@ -297,6 +310,7 @@ void switchGDrive(){
             file2.close();
 
             chdir(PATH);
+            stopAuthServer();
         }
     }
 
