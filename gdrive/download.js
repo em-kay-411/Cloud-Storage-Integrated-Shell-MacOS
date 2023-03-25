@@ -69,6 +69,6 @@ async function download(drive, resourceId, resourcePath){
             console.log('File downloaded to', resourcePath);
         }
     } catch (err) {
-        console.error(err);
+        console.log("No file found");
     }
 }

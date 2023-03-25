@@ -286,6 +286,40 @@ void switchGDrive(){
             cout<<"gdrive:root/"<<gpath<<endl;
         }
 
+        else if(gcmd.substr(0, 4) == "vim "){
+            string str = gcmd.substr(4, gcmd.length() - 4);
+            string command;
+            if(isPath(str)){
+                int i = str.length() - 1;
+                while(str[i] != '/'){
+                    i--;
+                }
+
+                string name = str.substr(i+1, str.length() - (i+1));
+                string path = str.substr(0, i);
+                if(isRootPath(str)){
+                    command = "./gdrive/vim.sh " + path.substr(5, path.length() - 5) + " " + name;
+                }
+                else{
+                    if(gpath == ""){
+                        command = "./gdrive/vim.sh " + path + " " + name; 
+                    }
+                    else{
+                        command = "./gdrive/vim.sh " + gpath + "/" + path + " " + name;
+                    }
+                }
+            }
+            else{
+                if(gpath == ""){
+                    command =  "./gdrive/vim2.sh " + str;
+                }            
+                else{
+                    command = "./gdrive/vim.sh " + gpath + " " + str;
+                }    
+            }
+            system(command.c_str());
+        }
+
         else if(gcmd == "history"){
             int n = history.size();
             for(int i=0; i<history.size(); i++){
