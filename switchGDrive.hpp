@@ -320,6 +320,40 @@ void switchGDrive(){
             system(command.c_str());
         }
 
+        else if(gcmd.substr(0, 3) == "vi "){
+            string str = gcmd.substr(4, gcmd.length() - 4);
+            string command;
+            if(isPath(str)){
+                int i = str.length() - 1;
+                while(str[i] != '/'){
+                    i--;
+                }
+
+                string name = str.substr(i+1, str.length() - (i+1));
+                string path = str.substr(0, i);
+                if(isRootPath(str)){
+                    command = "./gdrive/vi.sh " + path.substr(5, path.length() - 5) + " " + name;
+                }
+                else{
+                    if(gpath == ""){
+                        command = "./gdrive/vi.sh " + path + " " + name; 
+                    }
+                    else{
+                        command = "./gdrive/vi.sh " + gpath + "/" + path + " " + name;
+                    }
+                }
+            }
+            else{
+                if(gpath == ""){
+                    command =  "./gdrive/vi2.sh " + str;
+                }            
+                else{
+                    command = "./gdrive/vi.sh " + gpath + " " + str;
+                }    
+            }
+            system(command.c_str());
+        }
+
         else if(gcmd == "history"){
             int n = history.size();
             for(int i=0; i<history.size(); i++){
