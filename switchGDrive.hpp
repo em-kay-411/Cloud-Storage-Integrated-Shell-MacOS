@@ -26,6 +26,9 @@ void gDriveHelp()
     cout << "pwd                            -      Get current current working directory" << endl;
     cout << "help                           -      Help page" << endl;
     cout << "exit                           -      Exit from Google Drive and enter into the local system" << endl;
+    cout << "cat                            -      To display text from a file" << endl;
+    cout << "** Can run code files written in C, C++, Python, Java, NodeJS, Shell and Python Scripts **" << endl;
+    cout << "**            The compiler should be installed on the local system **" << endl;
 }
 
 string getDestinationName(string destination)

@@ -1,0 +1,17 @@
+Cloud Integrated Shell
+Developed by - EmKay
+
+This is a cloud integrated shell that works with Google drive from the shell environment. 
+Install the shell and enter "help", to see the list of commands.
+Only specific compilers are available in this version. 
+Only single code files can be run in this version. Project running version will be updated.
+
+
+Installation Guide - 
+1. Clone the repo to your local system
+2. Open the terminal and get into the project directory
+3. Run init.sh script by entering 
+        "./init.sh"
+4. A "CiShell.out" file will be generated.
+5. To run the shell - 
+        "./CiShell.out"
