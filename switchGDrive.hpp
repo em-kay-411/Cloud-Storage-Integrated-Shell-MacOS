@@ -467,7 +467,6 @@ void switchGDrive()
 }
 
 // For commands directly from local
-
 void returnToLocal()
 {
     ofstream file("./gdrive/gid.txt", ios::out);
@@ -836,5 +835,7 @@ void execFromLocalGDrive(string cmd)
     else if (cmd == "help")
     {
         gDriveHelp();
+        returnToLocal();
+        return;
     }
 }

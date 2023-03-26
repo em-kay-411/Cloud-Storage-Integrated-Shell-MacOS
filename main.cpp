@@ -105,6 +105,7 @@ int main()
             if(drive == "gdrive"){
                 switchGDrive();
             }
+            
         }
 
         else if (cmd.substr(0, 4) == "vim ")
