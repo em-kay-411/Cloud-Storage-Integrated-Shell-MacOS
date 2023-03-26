@@ -45,8 +45,7 @@ async function moveFile(auth) {
       fields: 'id, parents'
     }, (err, file) => {
       if (err) {
-        // Handle error
-        console.error(err);
+        console.log("Wrong folder or path entered")
       } else {
         console.log(`File ${ID} moved to folder ${newFolderId}.`);
       }

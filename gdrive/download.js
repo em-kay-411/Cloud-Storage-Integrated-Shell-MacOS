@@ -31,7 +31,7 @@ async function downloadResource(auth) {
     if(resourceId === null){
         resourceId = await getFileIdByPath(auth, process.argv[2]);
     }
-    console.log(resourceId);
+    // console.log(resourceId);
     const resourcePath = process.argv[3];
     
     await download(drive, resourceId, resourcePath);  

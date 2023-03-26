@@ -35,6 +35,6 @@ async function deletePath(auth){
         await drive.files.delete({fileId: ID});
         console.log("Done deleting");
     } catch(err){
-        console.log(err);
+        console.log("Error");
     }
 }

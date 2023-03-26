@@ -14,7 +14,7 @@ async function getFileIdByName(auth, name) {
         // Check if the file was found
         const files = response.data.files;
         if (files.length === 0) {
-            console.log(`File not found: ${name}`);
+            // console.log(`File not found: ${name}`);
             return null;
         } else {
             // Return the first file ID

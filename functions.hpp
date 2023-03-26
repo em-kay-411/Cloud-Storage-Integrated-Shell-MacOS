@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/utsname.h>
 #include "variables.hpp"
-#include "switchGDrive.hpp"
+#include "cat.hpp"
 using namespace std;
 
 void removeEndSpaces(string cmd);

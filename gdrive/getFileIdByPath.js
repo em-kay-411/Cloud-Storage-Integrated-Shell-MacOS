@@ -31,7 +31,7 @@ async function getFileIdByPath(auth, path) {
     });
 
     if (response.data.files.length === 0) {
-        console.error(`File '${fileName}' not found in '${path}'`);
+        // console.error(`File '${fileName}' not found in '${path}'`);
         return null;
     } else {
         return response.data.files[0].id;

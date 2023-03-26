@@ -9,6 +9,28 @@
 
 using namespace std;
 
+void helpdesk() {
+    cout << "               Cloud Integrated Shell - v1.0" << endl;
+    cout << "                      Powered by EmKay" << endl;
+    cout << "ls [<directoryPath>]           -      List files" << endl;
+    cout << "dwd <source> <destination>     -      Download source file/folder to local destination" << endl;
+    cout << "upd <source> <destination>     -      Upload source file/folder to" << endl;
+    cout << "cd <path>                      -      Change Current Directory to the path in" << endl;
+    cout << "rm <path>                      -      Delete the file/folder from" << endl;
+    cout << "mv <source> <destination>      -      Move source file/folder to a destination on" << endl;
+    cout << "cp <source> <destination>      -      Copy source file/folder to a destination on" << endl;
+    cout << "mkdir <path>                   -      Create a new directory on given path in" << endl;
+    cout << "vim <path>                     -      Opens a file in vim editor" << endl;
+    cout << "vi <path>                      -      Opens a file in vi editor" << endl;
+    cout << "whoami                         -      Get info about THIS ;-)" << endl;
+    cout << "pwd                            -      Get current current working directory" << endl;
+    cout << "gdrive:<command>               -      To execute <command> from the gdrive environment" << endl;
+    cout << "switchd gdrive                 -      Switch to gdrive environment" << endl;
+    cout << "cat                            -      Display the file data" << endl;
+    cout << "help                           -      Help page" << endl;
+    cout << "exit                           -      Exit from and enter into the local system" << endl;
+}
+
 int main()
 {
     char CISpath[2048];
@@ -131,6 +153,14 @@ int main()
         else if (cmd.substr(0, 3) == "vi ")
         {
             system(cmd.c_str());
+        }
+
+        else if(cmd.substr(0, 4) == "cat "){
+            catCMD(cmd);
+        }
+
+        else if (cmd == "help"){
+            helpdesk();
         }
 
         else

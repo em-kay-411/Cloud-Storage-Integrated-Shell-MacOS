@@ -13,7 +13,7 @@ async function getDirectoryIdByPath(auth, path) {
             fields: 'files(id)',
         });
         if (response.data.files.length === 0) {
-            console.error(`Folder '${part}' not found in '${path}'`);
+            // console.error(`Folder '${part}' not found in '${path}'`);
             return null;
         } else {
             folderId = response.data.files[0].id;

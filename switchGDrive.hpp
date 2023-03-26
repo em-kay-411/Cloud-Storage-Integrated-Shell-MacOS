@@ -20,6 +20,8 @@ void gDriveHelp()
     cout << "mv <source> <destination>      -      Move source file/folder to a destination on Google Drive" << endl;
     cout << "cp <source> <destination>      -      Copy source file/folder to a destination on Google Drive" << endl;
     cout << "mkdir <path>                   -      Create a new directory on given path in Google Drive" << endl;
+    cout << "vim <path>                     -      Opens a file in vim editor" << endl;
+    cout << "vi <path>                      -      Opens a file in vi editor" << endl;
     cout << "whoami                         -      Get info about THIS ;-)" << endl;
     cout << "pwd                            -      Get current current working directory" << endl;
     cout << "help                           -      Help page" << endl;
@@ -391,7 +393,7 @@ void switchGDrive()
 
         else if (gcmd.substr(0, 3) == "vi ")
         {
-            string str = gcmd.substr(4, gcmd.length() - 4);
+            string str = gcmd.substr(3, gcmd.length() - 3);
             string command;
             if (isPath(str))
             {
@@ -428,6 +430,197 @@ void switchGDrive()
                 else
                 {
                     command = "./gdrive/vi.sh " + gpath + " " + str;
+                }
+            }
+            system(command.c_str());
+        }
+
+        else if (gcmd.substr(0, 4) == "cat ")
+        {
+            string str = gcmd.substr(4, gcmd.length() - 4);
+            string command;
+            if (isPath(str))
+            {
+                int i = str.length() - 1;
+                while (str[i] != '/')
+                {
+                    i--;
+                }
+
+                string name = str.substr(i + 1, str.length() - (i + 1));
+                string path = str.substr(0, i);
+                if (isRootPath(str))
+                {
+                    command = "./gdrive/cat.sh " + path.substr(5, path.length() - 5) + " " + name;
+                }
+                else
+                {
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/cat.sh " + path + " " + name;
+                    }
+                    else
+                    {
+                        command = "./gdrive/cat.sh " + gpath + "/" + path + " " + name;
+                    }
+                }
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/cat2.sh " + str;
+                }
+                else
+                {
+                    command = "./gdrive/cat.sh " + gpath + " " + str;
+                }
+            }
+            system(command.c_str());
+        }
+
+        else if (gcmd.substr(0, 4) == "g++ " || gcmd.substr(0, 4) == "gcc " || gcmd.substr(0, 6) == "javac ")
+        {
+            int j = gcmd.length() - 1;
+            while (gcmd[j] != ' ')
+            {
+                j--;
+            }
+            string compiler = gcmd.substr(0, j);
+            string str = gcmd.substr(j + 1, gcmd.length() - (j + 1));
+            string command;
+            if (isPath(str))
+            {
+                int i = str.length() - 1;
+                while (str[i] != '/')
+                {
+                    i--;
+                }
+
+                string name = str.substr(i + 1, str.length() - (i + 1));
+                string path = str.substr(0, i);
+                if (isRootPath(str))
+                {
+                    command = "./gdrive/compile.sh " + path.substr(5, path.length() - 5) + " " + name + " " + compiler;
+                }
+                else
+                {
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/compile.sh " + path + " " + name + " " + compiler;
+                    }
+                    else
+                    {
+                        command = "./gdrive/compile.sh " + gpath + "/" + path + " " + name + " " + compiler;
+                    }
+                }
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/compile2.sh " + str + " " + compiler;
+                }
+                else
+                {
+                    command = "./gdrive/compile.sh " + gpath + " " + str + " " + compiler;
+                }
+            }
+            system(command.c_str());
+        }
+
+        else if (gcmd.substr(gcmd.length() - 4, 4) == ".out")
+        {
+            string command;
+            int i = gcmd.length() - 1;
+            while (gcmd[i] != '/')
+            {
+                i--;
+            }
+            string name = gcmd.substr(i + 1, gcmd.length() - (i + 1));
+            string path = gcmd.substr(0, i);
+            if (path == ".")
+            {
+                path = "";
+            }
+
+            if (isPath(path))
+            {
+                if (isRootPath(path))
+                {
+                    command = "./gdrive/run.sh " + path.substr(5, path.length() - 5) + " " + name;
+                }
+                else
+                {
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/run.sh " + path + " " + name;
+                    }
+                    else
+                    {
+                        command = "./gdrive/run.sh " + gpath + "/" + path + " " + name;
+                    }
+                }
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/run2.sh " + name;
+                }
+                else
+                {
+                    command = "./gdrive/run.sh " + gpath + " " + name;
+                }
+            }
+            system(command.c_str());
+        }
+
+        else if (gcmd.substr(0, 5) == "node " || gcmd.substr(0, 7) == "python " || gcmd.substr(0, 8) == "python3 " || gcmd.substr(0, 9) == "nodemon ")
+        {
+            int j = gcmd.length() - 1;
+            while (gcmd[j] != ' ')
+            {
+                j--;
+            }
+            string interpreter = gcmd.substr(0, j);
+            string str = gcmd.substr(j + 1, gcmd.length() - (j + 1));
+            string command;
+            if (isPath(str))
+            {
+                int i = str.length() - 1;
+                while (str[i] != '/')
+                {
+                    i--;
+                }
+
+                string name = str.substr(i + 1, str.length() - (i + 1));
+                string path = str.substr(0, i);
+                if (isRootPath(str))
+                {
+                    command = "./gdrive/interpreter.sh " + path.substr(5, path.length() - 5) + " " + name + " " + interpreter;
+                }
+                else
+                {
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/interpreter.sh " + path + " " + name + " " + interpreter;
+                    }
+                    else
+                    {
+                        command = "./gdrive/interpreter.sh " + gpath + "/" + path + " " + name + " " + interpreter;
+                    }
+                }
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/interpreter2.sh " + str + " " + interpreter;
+                }
+                else
+                {
+                    command = "./gdrive/interpreter.sh " + gpath + " " + str + " " + interpreter;
                 }
             }
             system(command.c_str());
@@ -607,7 +800,6 @@ void execFromLocalGDrive(string cmd)
         {
             command = "./gdrive/cdp.sh";
             system(command.c_str());
-            
         }
         if (isRootPath(path))
         {
@@ -738,7 +930,7 @@ void execFromLocalGDrive(string cmd)
         system(command.c_str());
         returnToLocal();
         return;
-    }    
+    }
 
     else if (cmd.substr(0, 4) == "vim ")
     {
@@ -830,7 +1022,205 @@ void execFromLocalGDrive(string cmd)
         system(command.c_str());
         returnToLocal();
         return;
-    }    
+    }
+
+    else if (cmd.substr(0, 4) == "cat ")
+    {
+        string str = cmd.substr(4, cmd.length() - 4);
+        string command;
+        if (isPath(str))
+        {
+            int i = str.length() - 1;
+            while (str[i] != '/')
+            {
+                i--;
+            }
+
+            string name = str.substr(i + 1, str.length() - (i + 1));
+            string path = str.substr(0, i);
+            if (isRootPath(str))
+            {
+                command = "./gdrive/cat.sh " + path.substr(5, path.length() - 5) + " " + name;
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/cat.sh " + path + " " + name;
+                }
+                else
+                {
+                    command = "./gdrive/cat.sh " + gpath + "/" + path + " " + name;
+                }
+            }
+        }
+        else
+        {
+            if (gpath == "")
+            {
+                command = "./gdrive/cat2.sh " + str;
+            }
+            else
+            {
+                command = "./gdrive/cat.sh " + gpath + " " + str;
+            }
+        }
+        system(command.c_str());
+        return;
+    }
+
+    else if (cmd.substr(0, 4) == "g++ " || cmd.substr(0, 4) == "gcc " || cmd.substr(0, 6) == "javac ")
+    {
+        int j = cmd.length() - 1;
+        while (cmd[j] != ' ')
+        {
+            j--;
+        }
+        string compiler = cmd.substr(0, j);
+        string str = cmd.substr(j + 1, cmd.length() - (j + 1));
+        string command;
+        if (isPath(str))
+        {
+            int i = str.length() - 1;
+            while (str[i] != '/')
+            {
+                i--;
+            }
+
+            string name = str.substr(i + 1, str.length() - (i + 1));
+            string path = str.substr(0, i);
+            if (isRootPath(str))
+            {
+                command = "./gdrive/compile.sh " + path.substr(5, path.length() - 5) + " " + name + " " + compiler;
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/compile.sh " + path + " " + name + " " + compiler;
+                }
+                else
+                {
+                    command = "./gdrive/compile.sh " + gpath + "/" + path + " " + name + " " + compiler;
+                }
+            }
+        }
+        else
+        {
+            if (gpath == "")
+            {
+                command = "./gdrive/compile2.sh " + str + " " + compiler;
+            }
+            else
+            {
+                command = "./gdrive/compile.sh " + gpath + " " + str + " " + compiler;
+            }
+        }
+        system(command.c_str());
+        returnToLocal();
+        return;
+    }
+
+    else if (cmd.substr(cmd.length() - 4, 4) == ".out")
+    {
+        string command;
+        int i = cmd.length() - 1;
+        while (cmd[i] != '/')
+        {
+            i--;
+        }
+        string name = cmd.substr(i + 1, cmd.length() - (i + 1));
+        string path = cmd.substr(0, i);
+        if (path == ".")
+        {
+            path = "";
+        }
+
+        if (isPath(path))
+        {
+            if (isRootPath(path))
+            {
+                command = "./gdrive/run.sh " + path.substr(5, path.length() - 5) + " " + name;
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/run.sh " + path + " " + name;
+                }
+                else
+                {
+                    command = "./gdrive/run.sh " + gpath + "/" + path + " " + name;
+                }
+            }
+        }
+        else
+        {
+            if (gpath == "")
+            {
+                command = "./gdrive/run2.sh " + name;
+            }
+            else
+            {
+                command = "./gdrive/run.sh " + gpath + " " + name;
+            }
+        }
+        system(command.c_str());
+        returnToLocal();
+        return;
+    }
+
+    else if (cmd.substr(0, 5) == "node " || cmd.substr(0, 7) == "python " || cmd.substr(0, 8) == "python3 " || cmd.substr(0, 9) == "nodemon ")
+    {
+        int j = cmd.length() - 1;
+        while (cmd[j] != ' ')
+        {
+            j--;
+        }
+        string interpreter = cmd.substr(0, j);
+        string str = cmd.substr(j + 1, cmd.length() - (j + 1));
+        string command;
+        if (isPath(str))
+        {
+            int i = str.length() - 1;
+            while (str[i] != '/')
+            {
+                i--;
+            }
+
+            string name = str.substr(i + 1, str.length() - (i + 1));
+            string path = str.substr(0, i);
+            if (isRootPath(str))
+            {
+                command = "./gdrive/interpreter.sh " + path.substr(5, path.length() - 5) + " " + name + " " + interpreter;
+            }
+            else
+            {
+                if (gpath == "")
+                {
+                    command = "./gdrive/interpreter.sh " + path + " " + name + " " + interpreter;
+                }
+                else
+                {
+                    command = "./gdrive/interpreter.sh " + gpath + "/" + path + " " + name + " " + interpreter;
+                }
+            }
+        }
+        else
+        {
+            if (gpath == "")
+            {
+                command = "./gdrive/interpreter2.sh " + str + " " + interpreter;
+            }
+            else
+            {
+                command = "./gdrive/interpreter.sh " + gpath + " " + str + " " + interpreter;
+            }
+        }
+        system(command.c_str());
+        returnToLocal();
+        return;
+    }
 
     else if (cmd == "help")
     {

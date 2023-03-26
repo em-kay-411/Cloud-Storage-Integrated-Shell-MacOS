@@ -17,7 +17,7 @@ async function createDirectory(auth){
     const drive = google.drive({version: 'v3', auth});
     const directoryName = process.argv[2];
     let parentID = await getDirectoryIdByPath(auth, process.argv[3]);
-    console.log(parentID);
+    // console.log(parentID);
 
     const directoryDetails = {
         name: `${directoryName}`,
