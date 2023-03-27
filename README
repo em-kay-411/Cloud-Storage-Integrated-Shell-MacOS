@@ -6,6 +6,12 @@ Install the shell and enter "help", to see the list of commands.
 Only specific compilers are available in this version. 
 Only single code files can be run in this version. Project running version will be updated.
 
+Requirements - 
+1. NodeJS
+2. Node Package Manager (npm)
+3. GNU Compiler Package
+4. PM2 Daemon Process Manager
+
 
 Installation Guide - 
 1. Clone the repo to your local system
