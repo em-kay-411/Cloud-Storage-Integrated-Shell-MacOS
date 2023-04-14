@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/utsname.h>
+#include <string.h>
 
 
 using namespace std;

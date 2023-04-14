@@ -43,6 +43,7 @@ void rmCMD(string cmd)
     }
     else{
         string file_path = cmd.substr(3, cmd.length() - 3);
+        cout<<file_path<<endl;
         
         if(remove(file_path.c_str()) != 0){
             cout<<"No such file found. "<<endl;
