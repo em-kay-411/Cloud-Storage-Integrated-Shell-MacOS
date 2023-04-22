@@ -23,3 +23,8 @@ Installation Guide -
         "./CiShell.out"
 Commit 1
 Commit 2
+<<<<<<< HEAD
+=======
+COmmit 3
+Commit 4
+>>>>>>> 7cff018 (comiit4)
