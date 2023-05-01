@@ -21,10 +21,4 @@ Installation Guide -
 4. A "CiShell.out" file will be generated.
 5. To run the shell - 
         "./CiShell.out"
-Commit 1
-Commit 2
-<<<<<<< HEAD
-=======
-COmmit 3
-Commit 4
->>>>>>> 7cff018 (comiit4)
+
