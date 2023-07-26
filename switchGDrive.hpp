@@ -3,6 +3,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <cstdlib>
+#include <thread>
 
 #include "env.hpp"
 namespace fs = std::filesystem;
@@ -151,62 +152,66 @@ void switchGDrive()
 
         else if (gcmd.substr(0, 4) == "dwd ")
         {
-            int i = gcmd.length() - 1;
-            while (gcmd[i] != ' ')
-            {
-                i--;
-            }
-            string source = gcmd.substr(4, i - 4);
-            string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
-            string destName = getDestinationName(source);
-            string command;
-            if (isRootPath(source))
-            {
-                command = "./gdrive/dwd.sh " + source.substr(5, source.length() - 5) + " " + destination + "/" + destName;
-            }
-            else
-            {
-                if (gpath == "")
+            thread([gcmd, gpath](){
+                int i = gcmd.length() - 1;
+                while (gcmd[i] != ' ')
                 {
-                    command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
+                    i--;
+                }
+                string source = gcmd.substr(4, i - 4);
+                string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
+                string destName = getDestinationName(source);
+                string command;
+                if (isRootPath(source))
+                {
+                    command = "./gdrive/dwd.sh " + source.substr(5, source.length() - 5) + " " + destination + "/" + destName;
                 }
                 else
                 {
-                    command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/dwd.sh " + source + " " + destination + "/" + destName;
+                    }
+                    else
+                    {
+                        command = "./gdrive/dwd.sh " + (gpath + "/" + source) + " " + (destination + "/" + destName);
+                    }
                 }
-            }
 
-            system(command.c_str());
+                system(command.c_str());
+            }).detach();
         }
 
         else if (gcmd.substr(0, 4) == "upd ")
         {
-            int i = gcmd.length() - 1;
-            while (gcmd[i] != ' ')
-            {
-                i--;
-            }
-
-            string source = gcmd.substr(4, i - 4);
-            string destination = gcmd.substr(i + 1, gcmd.length() - i);
-            string command;
-            if (isRootPath(destination))
-            {
-                command = "./gdrive/up.sh " + source + " " + destination.substr(5, destination.length() - 5);
-            }
-            else
-            {
-                if (gpath == "")
+            thread([gcmd, gpath](){
+                int i = gcmd.length() - 1;
+                while (gcmd[i] != ' ')
                 {
-                    command = "./gdrive/up.sh " + source + " " + destination;
+                    i--;
+                }
+
+                string source = gcmd.substr(4, i - 4);
+                string destination = gcmd.substr(i + 1, gcmd.length() - i);
+                string command;
+                if (isRootPath(destination))
+                {
+                    command = "./gdrive/up.sh " + source + " " + destination.substr(5, destination.length() - 5);
                 }
                 else
                 {
-                    command = "./gdrive/up.sh " + source + " " + gpath + "/" + destination;
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/up.sh " + source + " " + destination;
+                    }
+                    else
+                    {
+                        command = "./gdrive/up.sh " + source + " " + gpath + "/" + destination;
+                    }
                 }
-            }
 
-            system(command.c_str());
+                system(command.c_str());
+            }).detach();            
         }
 
         else if (gcmd.substr(0, 3) == "cd ")

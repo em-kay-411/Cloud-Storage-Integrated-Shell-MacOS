@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include "variables.hpp"
 #include "rm.hpp"
 
 void usernameCMD(){

@@ -1,11 +1,8 @@
-#include <iostream>
-#include <string>
 #include <dirent.h>
 #include <vector>
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/utsname.h>
-#include "variables.hpp"
 #include "cat.hpp"
 using namespace std;
 
