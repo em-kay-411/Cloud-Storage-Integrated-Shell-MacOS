@@ -244,76 +244,82 @@ void switchGDrive()
 
         else if (gcmd.substr(0, 3) == "rm ")
         {
-            string path = gcmd.substr(3, gcmd.length() - 3);
-            string command;
-            if (isRootPath(path))
-            {
-                command = "./gdrive/rm.sh " + path.substr(5, path.length() - 5);
-            }
-            else
-            {
-                if (gpath == "")
+            thread([gcmd, gpath](){
+                string path = gcmd.substr(3, gcmd.length() - 3);
+                string command;
+                if (isRootPath(path))
                 {
-                    command = "./gdrive/rm.sh " + path;
+                    command = "./gdrive/rm.sh " + path.substr(5, path.length() - 5);
                 }
                 else
                 {
-                    command = "./gdrive/rm.sh " + gpath + "/" + path;
+                    if (gpath == "")
+                    {
+                        command = "./gdrive/rm.sh " + path;
+                    }
+                    else
+                    {
+                        command = "./gdrive/rm.sh " + gpath + "/" + path;
+                    }
                 }
-            }
-            system(command.c_str());
+                system(command.c_str());
+            }).detach();            
         }
 
         // Only absolute paths required
         else if (gcmd.substr(0, 3) == "mv ")
         {
-            int i = gcmd.length() - 1;
-            while (gcmd[i] != ' ')
-            {
-                i--;
-            }
-            string source = gcmd.substr(3, i - 3);
-            string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
-            string command;
-            if (gpath == "")
-            {
-                string argv2 = source;
-                string argv3 = destination;
-                command = "./gdrive/mv.sh " + source + " " + destination;
-            }
-            else
-            {
-                string argv2 = gpath + "/" + source;
-                string argv3 = destination;
-                command = "./gdrive/mv.sh " + source + " " + destination;
-            }
-            system(command.c_str());
+            thread([gcmd, gpath](){
+                int i = gcmd.length() - 1;
+                while (gcmd[i] != ' ')
+                {
+                    i--;
+                }
+                string source = gcmd.substr(3, i - 3);
+                string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
+                string command;
+                if (gpath == "")
+                {
+                    string argv2 = source;
+                    string argv3 = destination;
+                    command = "./gdrive/mv.sh " + source + " " + destination;
+                }
+                else
+                {
+                    string argv2 = gpath + "/" + source;
+                    string argv3 = destination;
+                    command = "./gdrive/mv.sh " + source + " " + destination;
+                }
+                system(command.c_str());
+            }).detach();            
         }
 
         // Only absolute paths
         else if (gcmd.substr(0, 3) == "cp ")
         {
-            int i = gcmd.length() - 1;
-            while (gcmd[i] != ' ')
-            {
-                i--;
-            }
-            string source = gcmd.substr(3, i - 3);
-            string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
-            string command;
-            if (gpath == "")
-            {
-                string argv2 = source;
-                string argv3 = destination;
-                command = "./gdrive/cp.sh " + source + " " + destination;
-            }
-            else
-            {
-                string argv2 = gpath + "/" + source;
-                string argv3 = destination;
-                command = "./gdrive/cp.sh " + source + " " + destination;
-            }
-            system(command.c_str());
+            thread([gcmd, gpath](){
+                int i = gcmd.length() - 1;
+                while (gcmd[i] != ' ')
+                {
+                    i--;
+                }
+                string source = gcmd.substr(3, i - 3);
+                string destination = gcmd.substr(i + 1, (gcmd.length() - (i + 1)));
+                string command;
+                if (gpath == "")
+                {
+                    string argv2 = source;
+                    string argv3 = destination;
+                    command = "./gdrive/cp.sh " + source + " " + destination;
+                }
+                else
+                {
+                    string argv2 = gpath + "/" + source;
+                    string argv3 = destination;
+                    command = "./gdrive/cp.sh " + source + " " + destination;
+                }
+                system(command.c_str());
+            }).detach();            
         }
 
         else if (gcmd.substr(0, 6) == "mkdir ")
